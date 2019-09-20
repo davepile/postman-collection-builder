@@ -1,7 +1,8 @@
+
 module.exports.Collection = require('./lib/collection');
 module.exports.Item = require('./lib/item');
-module.exports.Folder = require('./lib/folder');
 module.exports.RequestItem = require('./lib/requestitem');
+module.exports.Folder = require('./lib/folder');
 module.exports.Request = require('./lib/request');
 module.exports.Headers = require('./lib/headers');
 module.exports.Header = require('./lib/header');
