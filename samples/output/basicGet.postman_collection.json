@@ -1,0 +1,44 @@
+{
+  "info": {
+    "_postman_id": "2ce4b140-ddf2-11e9-a357-99e9d9d787a7",
+    "name": "basicGet",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PostMan-Echo",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "2ce4ff60-ddf2-11e9-a357-99e9d9d787a7",
+            "exec": [
+              "   pm.test(\"Status code is 200\", function () {",
+              "        pm.response.to.have.status(200);",
+              "    });",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://postman-echo.com/get",
+          "protocol": "https",
+          "host": [
+            "postman-echo.com"
+          ],
+          "port": "",
+          "path": [
+            "/get"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": []
+}

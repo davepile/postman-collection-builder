@@ -1,0 +1,61 @@
+{
+  "info": {
+    "_postman_id": "9f072db0-ddf3-11e9-afd8-17ed28f8659a",
+    "name": "basicPost2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PostMan-Echo",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "9f077bd0-ddf3-11e9-afd8-17ed28f8659a",
+            "exec": [
+              "   pm.test(\"Status code is 200\", function () {",
+              "        pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "",
+              "   pm.test(\"Response data contains POSTed body\", function () {",
+              "        let jsonData = pm.response.json();",
+              "        pm.expect(jsonData.json.name).to.eql(\"James\");",
+              "    });",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-type",
+            "name": "Content-type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"James\" }"
+        },
+        "url": {
+          "raw": "https://postman-echo.com/post",
+          "protocol": "https",
+          "host": [
+            "postman-echo.com"
+          ],
+          "port": "",
+          "path": [
+            "/post"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": []
+}
