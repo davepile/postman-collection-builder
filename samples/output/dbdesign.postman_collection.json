@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "1b825cde-b8d1-4d89-9783-db0fe5166723",
+		"name": "dbdesign",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAllTables",
+			"item": [
+				{
+					"name": "tablesFromData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d1b02f54-72e5-474b-85c1-95d5612ae7d3",
+								"exec": [
+									"let schemaname = pm.iterationData.get(\"schemaname\");",
+									"",
+									"let schema = pm.globals.get(schemaname);",
+									"",
+									"pm.test('Schema is valid', function() {",
+									"    pm.response.to.have.jsonSchema(schema)",
+									" ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2882d6a0-c1f1-44b6-b109-5ecc9f6c1c6b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/tables/{{path}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"tables",
+								"{{path}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "42d35ee1-36a6-421f-b0a2-cfe7b7d9c44b",
+						"type": "text/javascript",
+						"exec": [
+							"let req = {",
+							"    url: '',",
+							"    method: 'GET',",
+							"    header: 'Content-Type:application/json',",
+							"    body: {}",
+							"};",
+							"   ",
+							"let tablelist = [",
+							"    \"projects\",",
+							"    \"projectversions\",",
+							"    \"mdbs\",",
+							"    \"mschemas\",",
+							"    \"mtables\",",
+							"    \"mcols\",",
+							"];    ",
+							"pm.globals.set(\"tablelist\", tablelist);",
+							"",
+							"tablelist.forEach( tblname => {",
+							"    req.url = 'http://localhost:9000/tables/schema/' + tblname + 'GetOne.json',",
+							"    pm.sendRequest(req, ",
+							"        function (err, res) {",
+							"            if (res !== null) {",
+							"                if (res.status === \"OK\"){",
+							"                    let json = res.json();",
+							"                    pm.globals.set(tblname + 'GetOne', json);",
+							"                } else {",
+							"                    console.log(\"Error returned from call: \" + req.url);",
+							"                    console.log(\"HTTP Status: \" + res.status);",
+							"                    console.log(\"HTTP status code: \" + res.code);",
+							"                }",
+							"            } else {",
+							"                console.log(\"NULL response returned from call: \" + req.url);",
+							"            }",
+							"        }",
+							"    );    ",
+							"});",
+							"",
+							"tablelist.forEach( tblname => {",
+							"    req.url = 'http://localhost:9000/tables/schema/' + tblname + 'GetMany.json',",
+							"    pm.sendRequest(req, ",
+							"        function (err, res) {",
+							"            if (res !== null) {",
+							"                if (res.status === \"OK\"){",
+							"                    let json = res.json();",
+							"                    pm.globals.set(tblname + 'GetMany', json);",
+							"                } else {",
+							"                    console.log(\"Error returned from call: \" + req.url);",
+							"                    console.log(\"HTTP Status: \" + res.status);",
+							"                    console.log(\"HTTP status code: \" + res.code);",
+							"                }",
+							"            } else {",
+							"                console.log(\"NULL response returned from call: \" + req.url);",
+							"            }",
+							"        }",
+							"    );    ",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8adf20c-4b68-4036-9446-4134e2691e64",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"DataPacket.Response is true\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.response).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 10ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is 'application/json; charset=UTF-8'\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "InsertProject",
+			"item": [
+				{
+					"name": "projectsInsert",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3cef81eb-8c94-43ba-8bc8-566fb0b64960",
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201,202]);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"status\": \"{{status}}\",\r\n    \"description\": \"{{description}}\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9000/tables/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"tables",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "350d77fd-b39d-4e99-9c2b-8f30bd710a9c",
+				"type": "text/javascript",
+				"exec": [
+					"// let DataPacketPartial = pm.globals.get(\"DataPacketPartial\");",
+					"// let DataPacket = pm.globals.get(\"DataPacket\")",
+					"",
+					"let req = {",
+					"    url: '',",
+					"    method: 'GET',",
+					"    header: 'Content-Type:application/json',",
+					"    body: {}",
+					"};",
+					"       ",
+					"let schemalist = [",
+					"    { name: 'DataPacketPartial'},",
+					"    { name: 'DataPacket'},",
+					"    ",
+					"];   ",
+					"",
+					"schemalist.forEach( e => {",
+					"    req.url = 'http://localhost:9000/tables/schema/' + e.name + '.json',",
+					"    pm.sendRequest(req, ",
+					"        function (err, res) {",
+					"            if (res !== null) {",
+					"                if (res.status === \"OK\"){",
+					"                    let json = res.json();",
+					"                    pm.globals.set(e.name, json);",
+					"                } else {",
+					"                    console.log(\"Error returned from call: \" + req.url);",
+					"                    console.log(\"HTTP Status: \" + res.status);",
+					"                    console.log(\"HTTP status code: \" + res.code);",
+					"                }",
+					"            } else {",
+					"                console.log(\"NULL response returned from call: \" + req.url);",
+					"            }",
+					"        }",
+					"    );    ",
+					"});",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0cf1dcf0-b4b3-4dee-919f-a8aa232d15e2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

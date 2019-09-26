@@ -1,0 +1,4 @@
+Try and be consistent with decriptions, errors etc, property/ method/ field etc definitions and consistent presentation eg. "Method 'fnWow()' didnt return ..."
+be consistent with quotes
+
+consider string lib/ function
