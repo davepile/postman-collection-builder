@@ -1,10 +1,10 @@
-console.log('Testing module: ./components/headers - Headers class ');
+console.log('Testing module: ./components/headers_test - Headers class ');
 
 const assert = require('assert');
 const pcb = require('../../index');
 
-let header1 = require('./header').header1;
-let header2 = require('./header').header2;
+let header1 = require('./header_test').header1;
+let header2 = require('./header_test').header2;
 
 // create empty header with empty constructor
 let headers = new pcb.Headers();

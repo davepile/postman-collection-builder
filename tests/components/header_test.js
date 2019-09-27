@@ -1,4 +1,4 @@
-console.log('Testing module: ./components/header - Header class');
+console.log('Testing module: ./components/header_test - Header class');
 
 const assert = require('assert');
 const pcb = require('../../index');

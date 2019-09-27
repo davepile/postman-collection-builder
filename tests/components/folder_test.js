@@ -1,7 +1,8 @@
-console.log('Testing module: ./components/folder - Folder class ');
+console.log('Testing module: ./components/folder_test - Folder class ');
 
 const assert = require('assert');
 const pcb = require('../../index');
+const requestitem = require('./requestitem_test');
 
 let name1 = "FolderOne";
 let nameC1 = "FolderCOne";
@@ -24,4 +25,9 @@ assert( folder.createFolder(nameC2) === folder.item[1], "folder.createFolder mus
 assert( folder.item.length === 2, "folder.item.length should be 2");
 assert.throws( () => { folder.createFolder() } );
 
-console.log('must add test for addRequestItem, but do RequestItem tests first');
+// Test addRequestItem
+assert( folder.addRequestItem(requestitem) === folder, "folder.addRequestItem must return a reference to folder");
+assert( folder.item[folder.item.length - 1] === requestitem, "Last item in folder.item should equal requestitem");
+assert.throws( ()=> { folder.addRequestItem('')});
+
+module.exports = folder;

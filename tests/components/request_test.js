@@ -1,11 +1,11 @@
-console.log('Testing module: ./components/request - Request class ');
+console.log('Testing module: ./components/request_test - Request class ');
 
 const assert = require('assert');
 const pcb = require('../../index');
 
-const url = require('./url');
-const headers = require('./headers');
-const body = require('./body');
+const url = require('./url_test');
+const headers = require('./headers_test');
+const body = require('./body_test');
 
 let getUrlstring = 'https://postman-echo.com/get';
 let postUrlstring = 'https://postman-echo.com/post';

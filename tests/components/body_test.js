@@ -1,4 +1,4 @@
-console.log('Testing module: ./components/body - Body class');
+console.log('Testing module: ./components/body_test - Body class');
 
 const assert = require('assert');
 const pcb = require('../../index');

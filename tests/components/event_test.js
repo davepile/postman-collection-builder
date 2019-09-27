@@ -1,9 +1,9 @@
-console.log('Testing module: ./components/event - Event class');
+console.log('Testing module: ./components/event_test - Event class');
 
 const assert = require('assert');
 const pcb = require('../../index');
 
-const testScript1 = require('./script');
+const testScript1 = require('./script_test');
 const testCode = "console.log('This is a test script logger');";
 
 const prerequestCode = "console.log('This is a pre-request script');"

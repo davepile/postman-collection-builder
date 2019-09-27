@@ -1,4 +1,4 @@
-console.log('Testing module: ./components/url - Url class');
+console.log('Testing module: ./components/url_test - Url class');
 
 const assert = require('assert');
 const pcb = require('../../index');

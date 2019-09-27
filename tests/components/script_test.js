@@ -1,4 +1,4 @@
-console.log('Testing module: ./components/script - Script class ');
+console.log('Testing module: ./components/script_test - Script class ');
 
 const assert = require('assert');
 const pcb = require('../../index');

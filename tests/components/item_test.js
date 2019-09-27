@@ -1,10 +1,10 @@
-console.log('Testing module: ./components/item - Item class ');
+console.log('Testing module: ./components/item_test - Item class ');
 
 const assert = require('assert');
 const pcb = require('../../index');
 
-const script = require('./script');
-const event = require('./event');
+const script = require('./script_test');
+const event = require('./event_test');
 
 let name1 = "ItemOne";
 let item = new pcb.Item(name1);
@@ -64,3 +64,4 @@ assert( item.event.length <= 2, "item.event must never have length > 2");
 assert( item.findEvent('test') === item.event[0], "item.findEvent('test') should return item.event[0]");
 assert( item.findEvent('prerequest') === item.event[1], "item.findEvent('prerequest') should return item.event[1]");
 
+module.exports = item;
