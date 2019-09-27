@@ -1,17 +1,12 @@
 # postman-collection-builder
 
-A way to programatically create and save a postman colleciton. My main aim was to be able to create a 
-postman collection from database records to automate
-testing.
+A way to programatically create and save a postman collection.
 
 ## Rationale
 I saw the postman API but there was limited doco and the examples were really just an explanation of the json schema
 
-I type check a lot of inputs and throw on them because this is run in a dev environment, so no need to handle errors, just fix them.
-
-I wanted to have everything in one file because they are all related, but it got pretty long and unwieldy
-
 ## Installation
+`npm i postman-collection-builder`
 
 ## Design
 The object model in this package mirrors the Postman collection json schema, so that when you save a JSON string of the
@@ -21,15 +16,15 @@ Its based on what I have found in the collections I have exported. There could e
 
 ### Conventions
 Object method names give a hint as to how they behave. There are slightly different return values that are aimed at chaining 
-eg. `collection.addRequestItem(ri01).addRequestItem(ri02)`
-but in the next example we are adding FolderTwo directly under the collection, not as a child of FolderOne.
-`collection.addFolder('FolderOne').addFolder('FolderTwo')`
+So in the below example of adding an object (a RequestItem) that has already been created, it would be convenient
+to have addRequestItem return a reference to the collection so we can chain the method calls. 
+eg. `collection.addRequestItem(requestitem01).addRequestItem(requestitem02)`
 
+**Add methods-** methods named `methodOwner.addXxxx(param)` will add the param object passed in to the method owner and return a reference to the method owner.
 
-**Add methods-** methods named `methodOwner.addXxxx(param)` will add the param object passed in to the method owner and pass back a reference to the method
-owner.
-
-**Create methods-** methods named `methodOwner.createXxxx(param)` will create a new object based on the param object (usually string) passed in to the method owner and pass back a reference to the newly created obuject, not the method owner.
+**Create methods-** methods named `methodOwner.createXxxx(param)` will create a new object and pass back a reference to the newly created obuject, not the method owner. The reason this approach was chosen is that in the prevous case of adding an object we 
+already have a reference to the added object. In the case of creating an object, wehave no other (external) method of getting a
+reference to the new object.
 
 **Set methods-** methods named `methodOwner.setXxxx(param)` will replace the existing object/ value with the one passed in as param and pass back a reference to the method owner.
 

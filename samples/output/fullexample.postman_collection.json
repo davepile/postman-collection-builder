@@ -1,0 +1,182 @@
+{
+  "info": {
+    "_postman_id": "07af65a0-e11c-11e9-84a6-e7e5e4165260",
+    "name": "fullexample",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GetAllTables",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "07afb3c1-e11c-11e9-84a6-e7e5e4165260",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"DataPacket.Response is true\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.response).to.eql(true);",
+              "});",
+              "",
+              "pm.test(\"Response time is less than 10ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(200);",
+              "});",
+              "",
+              "pm.test(\"Content-Type is 'application/json; charset=UTF-8'\", function () {",
+              "    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "item": [
+        {
+          "name": "AllTablesFromData",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "07afb3c0-e11c-11e9-84a6-e7e5e4165260",
+                "exec": [
+                  "let schemaname = pm.iterationData.get(\"schemaname\");",
+                  "",
+                  "let schema = pm.globals.get(schemaname);",
+                  "",
+                  "pm.test('Schema is valid', function() {",
+                  "    pm.response.to.have.jsonSchema(schema)",
+                  "    ",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "url": {
+              "raw": "http://localhost:9000/tables/{{path}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "tables",
+                "%7B%7Bpath%7D%7D"
+              ]
+            },
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "InsertProject",
+      "event": [],
+      "item": [
+        {
+          "name": "projectInsert",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "07afb3c2-e11c-11e9-84a6-e7e5e4165260",
+                "exec": [
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201,202]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "url": {
+              "raw": "http://localhost:9000/tables/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "tables",
+                "projects"
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n                        \"name\": \"{{name}}\",\n                        \"status\": \"{{status}}\",\n                        \"description\": \"{{description}}\"\n                    }"
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "07af65a1-e11c-11e9-84a6-e7e5e4165260",
+        "exec": [
+          "let req = {",
+          "    url: '',",
+          "    method: 'GET',",
+          "    header: 'Content-Type:application/json',",
+          "    body: {}",
+          "};",
+          "",
+          "let stype = [",
+          "    \"One\",",
+          "    \"Many\",",
+          "];",
+          "let tablelist = [",
+          "    \"projects\",",
+          "    \"projectversions\",",
+          "    \"mdbs\",",
+          "    \"mschemas\",",
+          "    \"mtables\",",
+          "    \"mcols\",",
+          "];    ",
+          "pm.globals.set(\"tablelist\", tablelist);",
+          "",
+          "stype.forEach( type => {",
+          "    tablelist.forEach( tblname => {",
+          "        req.url = 'http://localhost:9000/tables/schema/' + tblname + 'Get' + type + '.json',",
+          "        pm.sendRequest(req, ",
+          "            function (err, res) {",
+          "                if (res !== null) {",
+          "                    if (res.status === \"OK\"){",
+          "                        let json = res.json();",
+          "                        pm.globals.set(tblname + 'Get' + type, json);",
+          "                    } else {",
+          "                        console.log(\"Error returned from call: \" + req.url);",
+          "                        console.log(\"HTTP Status: \" + res.status);",
+          "                        console.log(\"HTTP status code: \" + res.code);",
+          "                    }",
+          "                } else {",
+          "                    console.log(\"NULL response returned from call: \" + req.url);",
+          "                }",
+          "            }",
+          "        );    ",
+          "    });",
+          "});",
+          ""
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ]
+}

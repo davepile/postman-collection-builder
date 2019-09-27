@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "ajv": "^6.10.2"
   }
 }

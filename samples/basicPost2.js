@@ -41,6 +41,3 @@ collection.addRequestItem(requestItem);
 
 // check the output folder. The collection will be saved with the name it was given
 saveCollection(collection);
-
-
-
