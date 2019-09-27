@@ -1,7 +1,9 @@
 const pcb = require('../index');
 const saveCollection = require('./savecollection');
 const outputFolder = './output';
-const prereqLib = require('./fullexample-prereqscripts');
+
+
+const prereqLib = require('./fullexample-prerequests');
 const testLib = require('./fullexample-tests');
 
 
