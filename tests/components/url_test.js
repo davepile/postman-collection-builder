@@ -21,4 +21,12 @@ assert( url.path.length === 2, "url.path length should be two");
 assert( url.path[0] === 'param1', "url.path[0] should be equal to 'param1'");
 assert( url.path[1] === 'target', "url.path[1] should be equal to 'target'");
 
+// Test postman params in url string
+let url2 = new pcb.Url('http://localhost:9000/tables/{{path}}');
+assert( url2.path[url2.path.length - 1] === '{{path}}', "The last element of url2.path should be '{{path}}'");
+
+// encode the postman params
+url2 = new pcb.Url('http://localhost:9000/tables/{{path}}', true);
+assert( url2.path[url2.path.length - 1] === "%7B%7Bpath%7D%7D", "The last element of url2.path should be uriEncoded '%7B%7Bpath%7D%7D'");
+
 module.exports = url;
